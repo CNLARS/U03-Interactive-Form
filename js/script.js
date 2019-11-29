@@ -283,14 +283,11 @@ $('#cvv').on('input', function () {
     $('span').eq(7).fadeOut();
   }
 });
-/*
+
 //in Progress final form submssion:
-for (let i = 0; i < $('input').length; i++) {
-  $('button').on('submit', function (event) {
-    if (input[i] === true) {
-      $('form').submit();
+
+if ( $('form').onsubmit() ) {
+  $('form').submit();
     } else {
-      console.log($('input').val());
       event.preventDefault();
-    }
-  })*/
+        }
