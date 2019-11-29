@@ -211,8 +211,6 @@ const payType = $(event.target).val();
 
 //Happy Coding : )
 
-//$(document).ready(function(){
-
 let nameRegex = /^[a-zA-Z ]+$/;
 let emailRegex = /^[^@]+@[^@.]+\.[a-z]+$/i;
 
@@ -296,4 +294,3 @@ for (let i = 0; i < $('input').length; i++) {
       event.preventDefault();
     }
   })*/
-}
