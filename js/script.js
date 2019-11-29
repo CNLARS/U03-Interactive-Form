@@ -213,20 +213,20 @@ const payType = $(event.target).val();
 
 //$(document).ready(function(){
 
-  let nameRegex = /^[a-zA-Z ]+$/;
-  let emailRegex =  /^[^@]+@[^@.]+\.[a-z]+$/i;
+let nameRegex = /^[a-zA-Z ]+$/;
+let emailRegex = /^[^@]+@[^@.]+\.[a-z]+$/i;
 
-  let visaRegex = 0;
-  let amexRegex = 0;
-  let mastercardRegex = 0;
-  let discoverRegex = 0;
+let visaRegex = /^4\d{13,16}$/; //Starting with 4, length 13 or 16 digits.
+let amexRegex = /^3(4|7)\d{13}$/; //Starting with 34 or 37, length 15 digits.
+let mastercardRegex = /^5[1-5]\d{14}$/; //Starting with 51 through 55, length 16 digits.
 
-  let zipRegex = /\d{5}/;
+let zipRegex = /^\d{5}$|^\d{5}-\d{4}$/; //5 or 9 digit zip code
+let cvvRegex = /^\d{3,4}$/; //3-4 CVV
 
 
 //Name [real time validator]
-$('#name').on('input', function(){
-  if( !$('#name').val().match(nameRegex) ){
+$('#name').on('input', function () {
+  if (!$('#name').val().match(nameRegex)) {
     $('span').eq(1).fadeIn();
     $('#name').css("borderColor", 'red');
   } else {
@@ -235,58 +235,65 @@ $('#name').on('input', function(){
   }
 });
 //Email [real time validator]
-  $('#mail').on('input', function(){
-    if( !$('#mail').val().match(emailRegex) ){
-      $('span').eq(2).fadeIn();
-      $('#mail').css("borderColor", 'red');
-    } else {
-      $('#mail').css("borderColor", '');
-      $('span').eq(2).fadeOut();
-    }
-  });
-//Activities [real time validator]
-    $('input[type=checkbox]').on('change', function(){
-      if( !$('input[type=checkbox]').is(':checked') ){
-        $('span').eq(3).fadeIn();
-        $('span').eq(4).fadeIn();
-      } else {
-        $('span').eq(3).fadeOut();
-        $('span').eq(4).fadeOut();
-      }
-    });
-//in Progress - Credit Card [real time validator]
-$('#payment').change('select', function(){
-
-  if ( $('option:selected').val('Credit Card') ) {
-
-    if( $('#cc-num').val().match(visaRegex|amexRegex|mastercardRegex|discoverRegex) ){
-      $('#cc-num').css("borderColor", '');
-      $('span').eq(5).fadeOut();
-    } else {
-      $('span').eq(5).fadeIn();
-      $('#cc-num').css("borderColor", 'red');
-
-    }
-
-    if ( !$('#zip').val().match(zipRegex) ) {
-      $('span').eq(6).fadeIn();
-      $('#zip').css("borderColor", 'red');
-    } else {
-      $('#zip').css("borderColor", '');
-      $('span').eq(6).fadeOut();
-    }
-
+$('#mail').on('input', function () {
+  if (!$('#mail').val().match(emailRegex)) {
+    $('span').eq(2).fadeIn();
+    $('#mail').css("borderColor", 'red');
+  } else {
+    $('#mail').css("borderColor", '');
+    $('span').eq(2).fadeOut();
   }
-    });
-//Test123
-//form submssion:
-/*  for (let i = 0; i < input.length; i++){
-    $('button').on('click', function(e.target){
-      if (input[i] === true){
-      console.log( $('input').val() );
-        $('form').submit();
-      } else {
-        event.preventDefault()
-      }
-  })
-} */
+});
+//Activities [real time validator]
+$('input[type=checkbox]').on('change', function () {
+  if (!$('input[type=checkbox]').is(':checked')) {
+    $('span').eq(3).fadeIn();
+    $('span').eq(4).fadeIn();
+  } else {
+    $('span').eq(3).fadeOut();
+    $('span').eq(4).fadeOut();
+  }
+});
+
+//in Progress - Credit Card [real time validator]
+$('#cc-num').on('input', function () {
+  if (!$('#cc-num').val().match(visaRegex | amexRegex | mastercardRegex)) {
+    $('span').eq(5).fadeIn();
+    $('#cc-num').css("borderColor", 'red');
+  } else {
+    $('#cc-num').css("borderColor", '');
+    $('span').eq(5).fadeOut();
+  }
+});
+//Zip Code [real time validator]
+$('#zip').on('input', function () {
+  if (!$('#zip').val().match(zipRegex)) {
+    $('span').eq(6).fadeIn();
+    $('#zip').css("borderColor", 'red');
+  } else {
+    $('#zip').css("borderColor", '');
+    $('span').eq(6).fadeOut();
+  }
+});
+//CVV [real time validator]
+$('#cvv').on('input', function () {
+  if (!$('#cvv').val().match(cvvRegex)) {
+    $('span').eq(7).fadeIn();
+    $('#cvv').css("borderColor", 'red');
+  } else {
+    $('#cvv').css("borderColor", '');
+    $('span').eq(7).fadeOut();
+  }
+});
+/*
+//in Progress final form submssion:
+for (let i = 0; i < $('input').length; i++) {
+  $('button').on('submit', function (event) {
+    if (input[i] === true) {
+      $('form').submit();
+    } else {
+      console.log($('input').val());
+      event.preventDefault();
+    }
+  })*/
+}
