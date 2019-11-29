@@ -278,7 +278,7 @@ $('#payment').change('select', function(){
 
   }
     });
-
+//Test123
 //form submssion:
 /*  for (let i = 0; i < input.length; i++){
     $('button').on('click', function(e.target){
