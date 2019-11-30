@@ -34,10 +34,6 @@ $('#title').on('change', function( ) {
   }
 });
 
-  //QUEST: Consolidate/simplify later to cluster eq() multiples
-  // const punColors = ["cornflowerblue", "darkslategrey", "gold"];
-  // const heartJSColors = ["tomato", "steelblue", "dimgrey"];
-
 /*T-Shirt Info:
 Default, no color options appear and reads “Please select a T-shirt theme”.*/
 $('#color').ready( function( ) {
@@ -69,17 +65,21 @@ $('#design').change(function(event){
       switch(themeColors) {
         case 'js puns':
               $('#color').show(); // exceeds expectations
+          $('#color').val('please select');
+              $colorOptions.eq(0).removeAttr('disabled').attr('visible', true).show();
               $colorOptions.eq(1).removeAttr('disabled').attr('visible', true).show();
               $colorOptions.eq(2).removeAttr('disabled').attr('visible', true).show();
-              $colorOptions.eq(3).hide();
-              $colorOptions.eq(4).hide();
-              $colorOptions.eq(5).hide();
+          $colorOptions.eq(3).attr('disabled', 'hidden', true).hide();
+          $colorOptions.eq(4).attr('disabled', 'hidden', true).hide();
+          $colorOptions.eq(5).attr('disabled', 'hidden', true).hide();
         break;
 
         case 'heart js':
               $('#color').show(); // exceeds expectations
-              $colorOptions.eq(1).hide();
-              $colorOptions.eq(2).hide();
+            $('#color').val('please select');
+          $colorOptions.eq(0).attr('disabled', 'hidden', true).hide();
+          $colorOptions.eq(1).attr('disabled', 'hidden', true).hide();
+          $colorOptions.eq(2).attr('disabled', 'hidden', true).hide();
               $colorOptions.eq(3).removeAttr('disabled').attr('visible', true).show();
               $colorOptions.eq(4).removeAttr('disabled').attr('visible', true).show();
               $colorOptions.eq(5).removeAttr('disabled').attr('visible', true).show();
@@ -165,9 +165,11 @@ for (let i = 0; i < checkbox.length; i += 1) {
 
 //Payment Section
 
-//Default invisible select method option and CC set as default
-$('#payment option[value="select method"]').attr('disabled', 'hidden', true).hide();
+//Default select option CC set as default
+$('#payment option[value="select method"]').attr('disabled', 'hidden', true).remove();
   $('#credit-card').show();
+    $('#paypal').hide();
+      $('#bitcoin').hide();
 
   $('#payment').change(function(event){
 
@@ -214,9 +216,7 @@ const payType = $(event.target).val();
 let nameRegex = /^[a-zA-Z ]+$/;
 let emailRegex = /^[^@]+@[^@.]+\.[a-z]+$/i;
 
-let visaRegex = /^4\d{13,16}$/; //Starting with 4, length 13 or 16 digits.
-let amexRegex = /^3(4|7)\d{13}$/; //Starting with 34 or 37, length 15 digits.
-let mastercardRegex = /^5[1-5]\d{14}$/; //Starting with 51 through 55, length 16 digits.
+let ccRegex = /^\d{13,16}$/; //Length of 13 to 16 digits.
 
 let zipRegex = /^\d{5}$|^\d{5}-\d{4}$/; //5 or 9 digit zip code
 let cvvRegex = /^\d{3,4}$/; //3-4 CVV
@@ -253,9 +253,9 @@ $('input[type=checkbox]').on('change', function () {
   }
 });
 
-//in Progress - Credit Card [real time validator]
+//Credit Card [real time validator]
 $('#cc-num').on('input', function () {
-  if (!$('#cc-num').val().match(visaRegex | amexRegex | mastercardRegex)) {
+  if (!$('#cc-num').val().match(ccRegex)) {
     $('span').eq(5).fadeIn();
     $('#cc-num').css("borderColor", 'red');
   } else {
@@ -286,8 +286,8 @@ $('#cvv').on('input', function () {
 
 //in Progress final form submssion:
 
-if ( $('form').onsubmit() ) {
-  $('form').submit();
-    } else {
-      event.preventDefault();
-        }
+// if ( $('form').onsubmit() ) {
+//   $('form').submit();
+//     } else {
+//       event.preventDefault();
+//         }
