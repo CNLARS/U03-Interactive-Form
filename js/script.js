@@ -305,30 +305,36 @@ if (
         } else {
       
   if ( !validName ) {
-    $('#name').text("Please Enter First and Last Name");
+    $('span').eq(1).fadeIn();
+    $('#name').css("borderColor", 'red');
     event.preventDefault();
   }
       if ( !validEmail ) {
-        $('#mail').text("Must include @");
+        $('span').eq(2).fadeIn();
+        $('#mail').css("borderColor", 'red');
         event.preventDefault();
       }
           if ( !validActivity ) {
-            $('input[type=checkbox]').text("Registration must include ONE activity");
+            $('span').eq(3).fadeIn();
+            $('span').eq(4).fadeIn();
            event.preventDefault();
           }
               if ( validPaymentCC ){
 
                 if ( !validCCNum ){
-                  $('#cc-num').text("Must be between 13-16 numbers");
+                  $('span').eq(5).fadeIn();
+                  $('#cc-num').css("borderColor", 'red');
                   event.preventDefault();
                 }
 
                 if ( !validZip ) {
-                  $('#zip').text("5 or 9 Digit Zip");
+                  $('span').eq(6).fadeIn();
+                  $('#zip').css("borderColor", 'red');
                   event.preventDefault();
                 }
                 if ( !validCVV ) {
-                  $('#cvv').text("3-4 Numbers");
+                  $('span').eq(7).fadeIn();
+                  $('#cvv').css("borderColor", 'red');
                   event.preventDefault();
                 }
               }
