@@ -223,7 +223,7 @@ let cvvRegex = /^\d{3,4}$/; //3-4 CVV
 
 
 //Name [real time validator : exceeds expectations]
-$('#name').on('input', 'submit', function () {
+$('#name').on('input', function () {
   if (!$('#name').val().match(nameRegex)) {
     $('span').eq(1).fadeIn();
     $('#name').css("borderColor", 'red');
@@ -233,7 +233,7 @@ $('#name').on('input', 'submit', function () {
   }
 });
 //Email [real time validator : exceeds expectations]
-$('#mail').on('input', 'submit', function () {
+$('#mail').on('input', function () {
   if (!$('#mail').val().match(emailRegex)) {
     $('span').eq(2).fadeIn();
     $('#mail').css("borderColor", 'red');
@@ -243,7 +243,7 @@ $('#mail').on('input', 'submit', function () {
   }
 });
 //Activities [real time validator : exceeds expectations]
-$('input[type=checkbox]').on('change', 'submit', function () {
+$('input[type=checkbox]').on('change', function () {
   if (!$('input[type=checkbox]').is(':checked')) {
     $('span').eq(3).fadeIn();
     $('span').eq(4).fadeIn();
