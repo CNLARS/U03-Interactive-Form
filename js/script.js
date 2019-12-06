@@ -319,7 +319,7 @@ if (
             $('span').eq(4).fadeIn();
            event.preventDefault();
           }
-              if ( validPaymentCC ){
+              if ( validPaymentCC && !validPaymentPaypal || !validPaymentBitcoin  ){
 
                 if ( !validCCNum ){
                   $('span').eq(5).fadeIn();
@@ -337,6 +337,8 @@ if (
                   $('#cvv').css("borderColor", 'red');
                   event.preventDefault();
                 }
+              } else if ( validPaymentCC || validPaymentPaypal || validPaymentBitcoin ){
+                $('form').submit();
               }
   }
 
