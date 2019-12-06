@@ -223,7 +223,7 @@ let cvvRegex = /^\d{3,4}$/; //3-4 CVV
 
 
 //Name [real time validator : exceeds expectations]
-$('#name').on('input', function () {
+$('#name').on('input', 'submit', function () {
   if (!$('#name').val().match(nameRegex)) {
     $('span').eq(1).fadeIn();
     $('#name').css("borderColor", 'red');
@@ -233,7 +233,7 @@ $('#name').on('input', function () {
   }
 });
 //Email [real time validator : exceeds expectations]
-$('#mail').on('input', function () {
+$('#mail').on('input', 'submit', function () {
   if (!$('#mail').val().match(emailRegex)) {
     $('span').eq(2).fadeIn();
     $('#mail').css("borderColor", 'red');
@@ -243,7 +243,7 @@ $('#mail').on('input', function () {
   }
 });
 //Activities [real time validator : exceeds expectations]
-$('input[type=checkbox]').on('change', function () {
+$('input[type=checkbox]').on('change', 'submit', function () {
   if (!$('input[type=checkbox]').is(':checked')) {
     $('span').eq(3).fadeIn();
     $('span').eq(4).fadeIn();
@@ -285,59 +285,54 @@ $('#cvv').on('input', function () {
 });
 
 //in Progress final form submssion:
- $('form').onsubmit = submit;
-function submit(event){
-  const validName = $('#name').val().match(nameRegex); 
-  const validEmail = $('#mail').val().match(emailRegex);
-  const validActivity = $('input[type=checkbox]').is(':checked');
-  const validPaymentBitcoin = $('#bitcoin').is(':selected');
-  const validPaymentPaypal = $('#paypal').is(':selected');
-  const validPaymentCC = $('#credit-card').is(':selected');
+$('form').submit(function submit(event) {
+    const validName = $('#name').val().match(nameRegex);
+    const validEmail = $('#mail').val().match(emailRegex);
+    const validActivity = $('input[type=checkbox]').is(':checked');
+    const validPaymentBitcoin = $('#payment option[value="bitcoin"]').is(':selected');
+    const validPaymentPaypal = $('#payment option[value="paypal"]').is(':selected');
+    const validPaymentCC = $('#payment option[value="creit-card"]').is(':selected');
     const validCCNum = $('#cc-num').val().match(ccRegex);
     const validZip = $('#zip').val().match(zipRegex);
     const validCVV = $('#cvv').val().match(cvvRegex);
 
-  //in Progress final form submssion:
-
-  if ($('form').onsubmit() === (validName && validEmail && validActivity && validPaymentCC && validCCNum && validZip && validCVV) || (validName && validEmail && validActivity && validPaymentBitcoin) || (validName && validEmail && validActivity && validPaymentPaypal)) {
- //   $('form').submit();
- alert('successful submission'); //testing123
-  } else {
+if ( 
+  (validName && validEmail && validActivity && validPaymentCC && validCCNum && validZip && validCVV) 
+    || (validName && validEmail && validActivity && validPaymentBitcoin) 
+      || (validName && validEmail && validActivity && validPaymentPaypal) ) {
+        $('form').submit();
+    
+        } else {
+      
+  if ( !validName ) {
+    $('#name').text("Please Enter First and Last Name");
     event.preventDefault();
   }
-}
+      if ( !validEmail ) {
+        $('#mail').text("Must include @");
+        event.preventDefault();
+      }
+          if ( !validActivity ) {
+            $('input[type=checkbox]').text("Registration must include ONE activity");
+           event.preventDefault();
+          }
+              if ( validPaymentCC ){
+
+                if ( !validCCNum ){
+                  $('#cc-num').text("Must be between 13-16 numbers");
+                  event.preventDefault();
+                }
+
+                if ( !validZip ) {
+                  $('#zip').text("5 or 9 Digit Zip");
+                  event.preventDefault();
+                }
+                if ( !validCVV ) {
+                  $('#cvv').text("3-4 Numbers");
+                  event.preventDefault();
+                }
+              }
+  }
 
 
-
-
-
-
-//Rough Draft Data Below:
-
-  //const validFormViaCC = validName && validEmail && validActivity && validPaymentCC && validCCNum && validZip && validCVV;
-//     if (validName && validEmail && validActivity && validPaymentCC && validCCNum && validZip && validCVV)
-//           $('form').submit();
-//         }
-//     if (validName && validEmail && validActivity && validPaymentBitcoin) {
-//           $('form').submit();
-//         }
-//     if (validName && validEmail && validActivity && validPaymentPaypal) {
-//           $('form').submit();
-//         }
-
-//          if (!validName) {
-// //error message + prevent default
-//                 } else if (!validEmail) {
-// //error message + prevent default
-//                 } else if (!validActivity) {
-// //error message + prevent default
-//         } else if (!validCCNum) {
-// //error message + prevent default
-//         } else if (!validZip) {
-// //error message + prevent default
-//         } else if (!validCVV) {
-// //error message + prevent default
-//         } else {
-//         event.preventDefault();
-//         console.log('unknown error');
-//                 }
+      });
