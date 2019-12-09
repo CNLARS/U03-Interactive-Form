@@ -15,10 +15,18 @@ const $colorOptions = $('#color option');
 const checkbox = document.querySelectorAll('.activities input'); //global const
 const totalAmountDue = document.createElement('label'); //global const
 
-$('span').hide(); //unobtrusive - included in html
+$('#name').before('<span class="hidden">* Not a Valid Name *</span>');
+//$(noName).css({font-weight}) 
+$('#mail').before('<span class="hidden">  * Not a Valid E-Mail *</span>');
+$('.activities').after('<span class="hidden">  * Select at least one activity for registration *</span>');
+$('#cc-num').before('<span class="hidden"> * Enter Valid Number *</span>');
+$('#zip').before('<span class="hidden">* Required *</span>');
+$('#cvv').before('<span class="hidden">* Required *</span>');
+
+$('span').hide();
 
 //On page load, cursor focuses on the name field by default
-$('#name').ready( function( ) {
+$('#name').ready(function () {
   $('#name').focus();
 });
 
@@ -26,17 +34,17 @@ $('#name').ready( function( ) {
 $otherJobTitle.hide();
 
 //Text field shows when the "Other" option is selected
-$('#title').on('change', function( ) {
+$('#title').on('change', function () {
   if ($(this).val() === 'other') {
     $otherJobTitle.show();
-      } else {
+  } else {
     $otherJobTitle.hide();
   }
 });
 
 /*T-Shirt Info:
 Default, no color options appear and reads “Please select a T-shirt theme”.*/
-$('#color').ready( function( ) {
+$('#color').ready(function () {
 
   $('#color').prepend($selectShirtTheme);
   $('#design').val('Select Theme');
@@ -50,164 +58,164 @@ $('#color').ready( function( ) {
 });
 
 // After selecting either theme, only display options that match the design selected:
-$('#design').change(function(event){
+$('#design').change(function (event) {
 
-	console.log($(event.target).val() ); //for testing purposes
+  console.log($(event.target).val()); //for testing purposes
 
-  $('option').each(function(i, option){
-    if( $('option').val() === $(event.target).val() ){
+  $('option').each(function (i, option) {
+    if ($('option').val() === $(event.target).val()) {
       $('option:selected');
-        } else {
+    } else {
       $('option').off('selected')
     }
 
     const themeColors = $(event.target).val();
-      switch(themeColors) {
-        case 'js puns':
-              $('#color').show(); // exceeds expectations
-          $('#color').val('cornflowerblue');
-              $colorOptions.eq(0).removeAttr('disabled').attr('visible', true).show();
-              $colorOptions.eq(1).removeAttr('disabled').attr('visible', true).show();
-              $colorOptions.eq(2).removeAttr('disabled').attr('visible', true).show();
-          $colorOptions.eq(3).attr('disabled', 'hidden', true).hide();
-          $colorOptions.eq(4).attr('disabled', 'hidden', true).hide();
-          $colorOptions.eq(5).attr('disabled', 'hidden', true).hide();
+    switch (themeColors) {
+      case 'js puns':
+        $('#color').show(); // exceeds expectations
+        $('#color').val('cornflowerblue');
+        $colorOptions.eq(0).removeAttr('disabled').attr('visible', true).show();
+        $colorOptions.eq(1).removeAttr('disabled').attr('visible', true).show();
+        $colorOptions.eq(2).removeAttr('disabled').attr('visible', true).show();
+        $colorOptions.eq(3).attr('disabled', 'hidden', true).hide();
+        $colorOptions.eq(4).attr('disabled', 'hidden', true).hide();
+        $colorOptions.eq(5).attr('disabled', 'hidden', true).hide();
         break;
 
-        case 'heart js':
-              $('#color').show(); // exceeds expectations
-          $('#color').val('tomato');
-          $colorOptions.eq(0).attr('disabled', 'hidden', true).hide();
-          $colorOptions.eq(1).attr('disabled', 'hidden', true).hide();
-          $colorOptions.eq(2).attr('disabled', 'hidden', true).hide();
-              $colorOptions.eq(3).removeAttr('disabled').attr('visible', true).show();
-              $colorOptions.eq(4).removeAttr('disabled').attr('visible', true).show();
-              $colorOptions.eq(5).removeAttr('disabled').attr('visible', true).show();
+      case 'heart js':
+        $('#color').show(); // exceeds expectations
+        $('#color').val('tomato');
+        $colorOptions.eq(0).attr('disabled', 'hidden', true).hide();
+        $colorOptions.eq(1).attr('disabled', 'hidden', true).hide();
+        $colorOptions.eq(2).attr('disabled', 'hidden', true).hide();
+        $colorOptions.eq(3).removeAttr('disabled').attr('visible', true).show();
+        $colorOptions.eq(4).removeAttr('disabled').attr('visible', true).show();
+        $colorOptions.eq(5).removeAttr('disabled').attr('visible', true).show();
         break;
 
-        default: console.log('Error: Not an Option')
+      default: console.log('Error: Not an Option')
         break;
-      }
-    });
+    }
   });
+});
 
 //Display the total activity cost:
 $('.activities').append(totalAmountDue);
 
 //Intial variable of total activity cost:
 let finalPrice = 0;
-$('input[type=checkbox]').on('click', function(event){
+$('input[type=checkbox]').on('click', function (event) {
   const $clicked = $(event.target);
   const clickedCost = $(event.target).attr('data-cost');
   const workshopPrice = clickedCost.slice(1);
   const workshopAmount = parseInt(workshopPrice, 10);
-    console.log('Osaka', typeof workshopAmount, workshopAmount); //Returns a number
+  console.log('Osaka', typeof workshopAmount, workshopAmount); //Returns a number
 
-//Displaying total activity cost:
+  //Displaying total activity cost:
 
   //Original if/else snippet - with guidance from Slack - Thanks @Lee V!
 
-    // if ( $clicked.prop('checked') === true ) {
-    //   finalPrice += workshopAmount;
-    // } else {
-    //   finalPrice -= workshopAmount;
-    // }
+  // if ( $clicked.prop('checked') === true ) {
+  //   finalPrice += workshopAmount;
+  // } else {
+  //   finalPrice -= workshopAmount;
+  // }
 
   // if/else snippet - reconfigured as a conditional (ternary) operator
-  ( $clicked.prop('checked') === true ) ?
-    finalPrice += workshopAmount:
-        finalPrice -= workshopAmount;
+  ($clicked.prop('checked') === true) ?
+    finalPrice += workshopAmount :
+    finalPrice -= workshopAmount;
 
-    $(totalAmountDue).html('<strong>Total: $</strong>' + finalPrice);
-             console.log(finalPrice); //testing123
+  $(totalAmountDue).html('<strong>Total: $</strong>' + finalPrice);
+  console.log(finalPrice); //testing123
 
-//Disabling Conflicting activities
+  //Disabling Conflicting activities
 
-const dayTimeData = $clicked.attr('data-day-and-time');
+  const dayTimeData = $clicked.attr('data-day-and-time');
   //console.log(dayTimeData);
-const checkbox = $('input[type=checkbox]');
+  const checkbox = $('input[type=checkbox]');
 
-for (let i = 0; i < checkbox.length; i += 1) {
- //if/else snippet structure from Slack's @Lee V's advice and Office Hours:
-  if ( $('input[name=js-frameworks]').is(':checked') && $('input[name=js-frameworks]').attr('data-day-and-time') ) {
-     // disabled true express
-     $('input[name=express]').prop('disabled', 'hidden');
-     console.log(dayTimeData, 'Kyoto');
-   } else {
+  for (let i = 0; i < checkbox.length; i += 1) {
+    //if/else snippet structure from Slack's @Lee V's advice and Office Hours:
+    if ($('input[name=js-frameworks]').is(':checked') && $('input[name=js-frameworks]').attr('data-day-and-time')) {
+      // disabled true express
+      $('input[name=express]').prop('disabled', 'hidden');
+      console.log(dayTimeData, 'Kyoto');
+    } else {
       $('input[name=express]').removeAttr('disabled', 'hidden');
-   }
+    }
 
-  if ( $('input[name=express]').is(':checked') && $('input[name=express]').attr('data-day-and-time') ) {
-     // disabled true js-frameworks
-     $('input[name=js-frameworks]').prop('disabled', 'hidden');
-     console.log(dayTimeData, 'Nagoya');
-   } else {
+    if ($('input[name=express]').is(':checked') && $('input[name=express]').attr('data-day-and-time')) {
+      // disabled true js-frameworks
+      $('input[name=js-frameworks]').prop('disabled', 'hidden');
+      console.log(dayTimeData, 'Nagoya');
+    } else {
       $('input[name=js-frameworks]').removeAttr('disabled', 'hidden');
-   }
+    }
 
-  if ( $('input[name=js-libs]').is(':checked') && $('input[name=js-libs]').attr('data-day-and-time') ) {
-     // disabled true node
-     $('input[name=node]').prop('disabled', 'hidden');
-     console.log(dayTimeData, 'Tsuruga');
-   } else {
+    if ($('input[name=js-libs]').is(':checked') && $('input[name=js-libs]').attr('data-day-and-time')) {
+      // disabled true node
+      $('input[name=node]').prop('disabled', 'hidden');
+      console.log(dayTimeData, 'Tsuruga');
+    } else {
       $('input[name=node]').removeAttr('disabled', 'hidden');
-   }
+    }
 
-  if ( $('input[name=node]').is(':checked') && $('input[name=node]').attr('data-day-and-time') ) {
-     // disabled true js-libs
-     $('input[name=js-libs]').prop('disabled', 'hidden');
-     console.log(dayTimeData, 'Tokyo');
-   } else {
-         $('input[name=js-libs]').removeAttr('disabled', 'hidden');
-      }
-    };
+    if ($('input[name=node]').is(':checked') && $('input[name=node]').attr('data-day-and-time')) {
+      // disabled true js-libs
+      $('input[name=js-libs]').prop('disabled', 'hidden');
+      console.log(dayTimeData, 'Tokyo');
+    } else {
+      $('input[name=js-libs]').removeAttr('disabled', 'hidden');
+    }
+  };
 });
 
 //Payment Section
 
 //Default select option CC set as default
 $('#payment option[value="select method"]').attr('disabled', 'hidden', true).remove();
-  $('#credit-card').show();
-    $('#paypal').hide();
-      $('#bitcoin').hide();
+$('#credit-card').show();
+$('#paypal').hide();
+$('#bitcoin').hide();
 
-  $('#payment').change(function(event){
+$('#payment').change(function (event) {
 
-    $('option').each(function(i, option){
-      if( $('option').val() === $(event.target).val() ){
-        $('option:selected');
-      } else {
-    $('option').off('selected')
-  }
+  $('option').each(function (i, option) {
+    if ($('option').val() === $(event.target).val()) {
+      $('option:selected');
+    } else {
+      $('option').off('selected')
+    }
 
-const payType = $(event.target).val();
+    const payType = $(event.target).val();
 
-  switch(payType) {
+    switch (payType) {
 
-  case 'Credit Card':
-    $('#credit-card').show();
-    $('#cc-num').ready( function( ) {
-      $('#cc-num').focus();
+      case 'Credit Card':
+        $('#credit-card').show();
+        $('#cc-num').ready(function () {
+          $('#cc-num').focus();
         });
-    $('#paypal').hide();
-    $('#bitcoin').hide();
-  break;
+        $('#paypal').hide();
+        $('#bitcoin').hide();
+        break;
 
-  case 'PayPal':
-    $('#credit-card').hide();
-    $('#paypal').show();
-    $('#bitcoin').hide();
-  break;
+      case 'PayPal':
+        $('#credit-card').hide();
+        $('#paypal').show();
+        $('#bitcoin').hide();
+        break;
 
-  case 'Bitcoin':
-    $('#credit-card').hide();
-    $('#paypal').hide();
-    $('#bitcoin').show();
-  break;
+      case 'Bitcoin':
+        $('#credit-card').hide();
+        $('#paypal').hide();
+        $('#bitcoin').show();
+        break;
 
-  default: console.log('Error: Not a Payment Option')
-  break;
-}
+      default: console.log('Error: Not a Payment Option')
+        break;
+    }
   });
 });
 
@@ -246,101 +254,98 @@ $('#mail').on('input', function () {
 $('input[type=checkbox]').on('change', function () {
   if (!$('input[type=checkbox]').is(':checked')) {
     $('span').eq(3).fadeIn();
-    $('span').eq(4).fadeIn();
   } else {
     $('span').eq(3).fadeOut();
-    $('span').eq(4).fadeOut();
   }
 });
 
 //Credit Card [real time validator : exceeds expectations]
 $('#cc-num').on('input', function () {
   if (!$('#cc-num').val().match(ccRegex)) {
-    $('span').eq(5).fadeIn();
+    $('span').eq(4).fadeIn();
     $('#cc-num').css("borderColor", 'red');
   } else {
     $('#cc-num').css("borderColor", '');
-    $('span').eq(5).fadeOut();
+    $('span').eq(4).fadeOut();
   }
 });
 //Zip Code [real time validator : exceeds expectations]
 $('#zip').on('input', function () {
   if (!$('#zip').val().match(zipRegex)) {
-    $('span').eq(6).fadeIn();
+    $('span').eq(5).fadeIn();
     $('#zip').css("borderColor", 'red');
   } else {
     $('#zip').css("borderColor", '');
-    $('span').eq(6).fadeOut();
+    $('span').eq(5).fadeOut();
   }
 });
 //CVV [real time validator : exceeds expectations]
 $('#cvv').on('input', function () {
   if (!$('#cvv').val().match(cvvRegex)) {
-    $('span').eq(7).fadeIn();
+    $('span').eq(6).fadeIn();
     $('#cvv').css("borderColor", 'red');
   } else {
     $('#cvv').css("borderColor", '');
-    $('span').eq(7).fadeOut();
+    $('span').eq(6).fadeOut();
   }
 });
 
 //in Progress final form submssion:
 $('form').submit(function submit(event) {
-    const validName = $('#name').val().match(nameRegex);
-    const validEmail = $('#mail').val().match(emailRegex);
-    const validActivity = $('input[type=checkbox]').is(':checked');
-    const validPaymentBitcoin = $('#payment option[value="bitcoin"]').is(':selected');
-    const validPaymentPaypal = $('#payment option[value="paypal"]').is(':selected');
-    const validPaymentCC = $('#payment option[value="creit-card"]').is(':selected');
-    const validCCNum = $('#cc-num').val().match(ccRegex);
-    const validZip = $('#zip').val().match(zipRegex);
-    const validCVV = $('#cvv').val().match(cvvRegex);
+  const validName = $('#name').val().match(nameRegex);
+  const validEmail = $('#mail').val().match(emailRegex);
+  const validActivity = $('input[type=checkbox]').is(':checked');
+  const validPaymentBitcoin = $('#payment option[value="bitcoin"]').is(':selected');
+  const validPaymentPaypal = $('#payment option[value="paypal"]').is(':selected');
+  const validPaymentCC = $('#payment option[value="Credit Card"]').is(':selected');
+  const validCCNum = $('#cc-num').val().match(ccRegex);
+  const validZip = $('#zip').val().match(zipRegex);
+  const validCVV = $('#cvv').val().match(cvvRegex);
 
-if ( 
-  (validName && validEmail && validActivity && validPaymentCC && validCCNum && validZip && validCVV) 
-    || (validName && validEmail && validActivity && validPaymentBitcoin) 
-      || (validName && validEmail && validActivity && validPaymentPaypal) ) {
-        $('form').submit();
-    
-        } else {
-      
-  if ( !validName ) {
-    $('span').eq(1).fadeIn();
-    $('#name').css("borderColor", 'red');
-    event.preventDefault();
-  }
-      if ( !validEmail ) {
-        $('span').eq(2).fadeIn();
-        $('#mail').css("borderColor", 'red');
+  if (
+    (validName && validEmail && validActivity && validPaymentCC && validCCNum && validZip && validCVV)
+    || (validName && validEmail && validActivity && validPaymentBitcoin)
+    || (validName && validEmail && validActivity && validPaymentPaypal)) {
+    $('form').submit();
+
+  } else {
+
+    if (!validName) {
+      $('span').eq(1).fadeIn();
+      $('#name').css("borderColor", 'red');
+      event.preventDefault();
+    }
+    if (!validEmail) {
+      $('span').eq(2).fadeIn();
+      $('#mail').css("borderColor", 'red');
+      event.preventDefault();
+    }
+    if (!validActivity) {
+      $('span').eq(3).fadeIn();
+      event.preventDefault();
+    }
+    if (validPaymentCC && !validPaymentPaypal || !validPaymentBitcoin) {
+
+      if (!validCCNum) {
+        $('span').eq(4).fadeIn();
+        $('#cc-num').css("borderColor", 'red');
         event.preventDefault();
       }
-          if ( !validActivity ) {
-            $('span').eq(3).fadeIn();
-            $('span').eq(4).fadeIn();
-           event.preventDefault();
-          }
-              if ( validPaymentCC && !validPaymentPaypal || !validPaymentBitcoin  ){
 
-                if ( !validCCNum ){
-                  $('span').eq(5).fadeIn();
-                  $('#cc-num').css("borderColor", 'red');
-                  event.preventDefault();
-                }
-
-                if ( !validZip ) {
-                  $('span').eq(6).fadeIn();
-                  $('#zip').css("borderColor", 'red');
-                  event.preventDefault();
-                }
-                if ( !validCVV ) {
-                  $('span').eq(7).fadeIn();
-                  $('#cvv').css("borderColor", 'red');
-                  event.preventDefault();
-                }
-              } else if ( validPaymentCC || validPaymentPaypal || validPaymentBitcoin ){
-                $('form').submit();
-              }
+      if (!validZip) {
+        $('span').eq(5).fadeIn();
+        $('#zip').css("borderColor", 'red');
+        event.preventDefault();
+      }
+      if (!validCVV) {
+        $('span').eq(6).fadeIn();
+        $('#cvv').css("borderColor", 'red');
+        event.preventDefault();
+      }
+    } else if (validPaymentCC || validPaymentPaypal || validPaymentBitcoin) {
+      $('form').submit();
+    }
   }
 
 
-      });
+});
