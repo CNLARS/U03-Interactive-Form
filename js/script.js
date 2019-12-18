@@ -291,7 +291,7 @@ $('#cvv').on('input', function () {
 });
 
 //in Progress final form submssion:
-$('form').submit(function submit(event) {
+$('form').submit(function () {
   const validName = $('#name').val().match(nameRegex);
   const validEmail = $('#mail').val().match(emailRegex);
   const validActivity = $('input[type=checkbox]').is(':checked');
@@ -301,49 +301,49 @@ $('form').submit(function submit(event) {
   const validCCNum = $('#cc-num').val().match(ccRegex);
   const validZip = $('#zip').val().match(zipRegex);
   const validCVV = $('#cvv').val().match(cvvRegex);
-
+  
   if (
     (validName && validEmail && validActivity && validPaymentCC && validCCNum && validZip && validCVV)
     || (validName && validEmail && validActivity && validPaymentBitcoin)
     || (validName && validEmail && validActivity && validPaymentPaypal)) {
-    $('form').submit();
+    return true;
 
   } else {
 
     if (!validName) {
       $('span').eq(1).fadeIn();
       $('#name').css("borderColor", 'red');
-      event.preventDefault();
+      return false;
     }
     if (!validEmail) {
       $('span').eq(2).fadeIn();
       $('#mail').css("borderColor", 'red');
-      event.preventDefault();
+      return false;
     }
     if (!validActivity) {
       $('span').eq(3).fadeIn();
-      event.preventDefault();
+      return false;
     }
-    if (validPaymentCC && !validPaymentPaypal || !validPaymentBitcoin) {
+    if (validPaymentCC) {
 
       if (!validCCNum) {
         $('span').eq(4).fadeIn();
         $('#cc-num').css("borderColor", 'red');
-        event.preventDefault();
+        return false;
       }
 
       if (!validZip) {
         $('span').eq(5).fadeIn();
         $('#zip').css("borderColor", 'red');
-        event.preventDefault();
+        return false;
       }
       if (!validCVV) {
         $('span').eq(6).fadeIn();
         $('#cvv').css("borderColor", 'red');
-        event.preventDefault();
+        return false;
       }
-    } else if (validPaymentCC || validPaymentPaypal || validPaymentBitcoin) {
-      $('form').submit();
+    } else if (validPaymentPaypal || validPaymentBitcoin) {
+        return true;
     }
   }
 
