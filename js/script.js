@@ -313,35 +313,38 @@ $('form').submit(function () {
     if (!validName) {
       $('span').eq(1).fadeIn();
       $('#name').css("borderColor", 'red');
-      return false;
+      
     }
     if (!validEmail) {
       $('span').eq(2).fadeIn();
       $('#mail').css("borderColor", 'red');
-      return false;
+     
     }
     if (!validActivity) {
       $('span').eq(3).fadeIn();
-      return false;
+     
     }
     if (validPaymentCC) {
 
       if (!validCCNum) {
         $('span').eq(4).fadeIn();
         $('#cc-num').css("borderColor", 'red');
-        return false;
+        
       }
 
       if (!validZip) {
         $('span').eq(5).fadeIn();
         $('#zip').css("borderColor", 'red');
-        return false;
+       
       }
       if (!validCVV) {
         $('span').eq(6).fadeIn();
         $('#cvv').css("borderColor", 'red');
-        return false;
+        
       }
+
+      return false;
+      
     } else if (validPaymentPaypal || validPaymentBitcoin) {
         return true;
     }
