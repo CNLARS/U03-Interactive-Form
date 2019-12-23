@@ -23,6 +23,13 @@ $('#cc-num').before('<span class="hidden"> * Enter Valid Number *</span>');
 $('#zip').before('<span class="hidden">* Required *</span>');
 $('#cvv').before('<span class="hidden">* Required *</span>');
 
+$('#name').before('<span class="hidden">* A-Z only *</span>');
+$('#mail').before('<span class="hidden">  * Requires @ and . *</span>');
+$('.activities').after('<span class="hidden">  * No Activity Selected *</span>');
+$('#cc-num').before('<span class="hidden"> * Requires 13-16 Digits  *</span>');
+$('#zip').before('<span class="hidden">* 5 or 9 Digits *</span>');
+$('#cvv').before('<span class="hidden">* 3 to 4 Digits *</span>');
+
 $('span').hide();
 
 //On page load, cursor focuses on the name field by default
@@ -233,60 +240,60 @@ let cvvRegex = /^\d{3,4}$/; //3-4 CVV
 //Name [real time validator : exceeds expectations]
 $('#name').on('input', function () {
   if (!$('#name').val().match(nameRegex)) {
-    $('span').eq(1).fadeIn();
+    $('span').eq(2).fadeIn();
     $('#name').css("borderColor", 'red');
   } else {
     $('#name').css("borderColor", '');
-    $('span').eq(1).fadeOut();
+    $('span').eq(2).fadeOut();
   }
 });
 //Email [real time validator : exceeds expectations]
 $('#mail').on('input', function () {
   if (!$('#mail').val().match(emailRegex)) {
-    $('span').eq(2).fadeIn();
+    $('span').eq(4).fadeIn();
     $('#mail').css("borderColor", 'red');
   } else {
     $('#mail').css("borderColor", '');
-    $('span').eq(2).fadeOut();
+    $('span').eq(4).fadeOut();
   }
 });
 //Activities [real time validator : exceeds expectations]
 $('input[type=checkbox]').on('change', function () {
   if (!$('input[type=checkbox]').is(':checked')) {
-    $('span').eq(3).fadeIn();
+    $('span').eq(6).fadeIn();
   } else {
-    $('span').eq(3).fadeOut();
+    $('span').eq(6).fadeOut();
   }
 });
 
 //Credit Card [real time validator : exceeds expectations]
 $('#cc-num').on('input', function () {
   if (!$('#cc-num').val().match(ccRegex)) {
-    $('span').eq(4).fadeIn();
+    $('span').eq(7).fadeIn();
     $('#cc-num').css("borderColor", 'red');
   } else {
     $('#cc-num').css("borderColor", '');
-    $('span').eq(4).fadeOut();
+    $('span').eq(7).fadeOut();
   }
 });
 //Zip Code [real time validator : exceeds expectations]
 $('#zip').on('input', function () {
   if (!$('#zip').val().match(zipRegex)) {
-    $('span').eq(5).fadeIn();
+    $('span').eq(10).fadeIn();
     $('#zip').css("borderColor", 'red');
   } else {
     $('#zip').css("borderColor", '');
-    $('span').eq(5).fadeOut();
+    $('span').eq(10).fadeOut();
   }
 });
 //CVV [real time validator : exceeds expectations]
 $('#cvv').on('input', function () {
   if (!$('#cvv').val().match(cvvRegex)) {
-    $('span').eq(6).fadeIn();
+    $('span').eq(12).fadeIn();
     $('#cvv').css("borderColor", 'red');
   } else {
     $('#cvv').css("borderColor", '');
-    $('span').eq(6).fadeOut();
+    $('span').eq(12).fadeOut();
   }
 });
 
@@ -310,35 +317,35 @@ $('form').submit(function () {
 
   } else {
 
-    if (!validName) {
+    if ($('#name').val() === '') {
       $('span').eq(1).fadeIn();
       $('#name').css("borderColor", 'red');
       
     }
-    if (!validEmail) {
-      $('span').eq(2).fadeIn();
+    if ($('#mail').val() === '') {
+      $('span').eq(3).fadeIn();
       $('#mail').css("borderColor", 'red');
      
     }
-    if (!validActivity) {
-      $('span').eq(3).fadeIn();
+    if (validActivity === false) {
+      $('span').eq(5).fadeIn();
      
     }
     if (validPaymentCC) {
 
-      if (!validCCNum) {
-        $('span').eq(4).fadeIn();
+      if ($('#cc-num').val() === '') {
+        $('span').eq(8).fadeIn();
         $('#cc-num').css("borderColor", 'red');
         
       }
 
-      if (!validZip) {
-        $('span').eq(5).fadeIn();
+      if ($('#zip').val() === '') {
+        $('span').eq(9).fadeIn();
         $('#zip').css("borderColor", 'red');
        
       }
-      if (!validCVV) {
-        $('span').eq(6).fadeIn();
+      if ($('#cvv').val() === '') {
+        $('span').eq(11).fadeIn();
         $('#cvv').css("borderColor", 'red');
         
       }
