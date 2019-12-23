@@ -15,8 +15,8 @@ const $colorOptions = $('#color option');
 const checkbox = document.querySelectorAll('.activities input'); //global const
 const totalAmountDue = document.createElement('label'); //global const
 
+//Error Messages 
 $('#name').before('<span class="hidden">* Not a Valid Name *</span>');
-//$(noName).css({font-weight}) 
 $('#mail').before('<span class="hidden">  * Not a Valid E-Mail *</span>');
 $('.activities').after('<span class="hidden">  * Select at least one activity for registration *</span>');
 $('#cc-num').before('<span class="hidden"> * Enter Valid Number *</span>');
@@ -59,7 +59,7 @@ $('#color').ready(function () {
   $('#color').hide(); // exceeds expectations
 
   $colorOptions.attr('hidden', true).hide();
-  //Maybe $colorOptions.eq(0).attr('disabled', 'hidden', true);
+
   $('#color option[value="please select"]').attr('disabled', 'hidden', true).hide();
   $('#design option').eq(0).attr('disabled', 'hidden', true).hide();
 });
@@ -67,7 +67,7 @@ $('#color').ready(function () {
 // After selecting either theme, only display options that match the design selected:
 $('#design').change(function (event) {
 
-  console.log($(event.target).val()); //for testing purposes
+  //console.log($(event.target).val()); //for testing purposes
 
   $('option').each(function (i, option) {
     if ($('option').val() === $(event.target).val()) {
@@ -116,17 +116,17 @@ $('input[type=checkbox]').on('click', function (event) {
   const clickedCost = $(event.target).attr('data-cost');
   const workshopPrice = clickedCost.slice(1);
   const workshopAmount = parseInt(workshopPrice, 10);
-  console.log('Osaka', typeof workshopAmount, workshopAmount); //Returns a number
+ // console.log('Osaka', typeof workshopAmount, workshopAmount); //Returns a number
 
   //Displaying total activity cost:
 
-  //Original if/else snippet - with guidance from Slack - Thanks @Lee V!
+  /* Original if/else snippet - with guidance from Slack - Thanks @Lee V!
 
-  // if ( $clicked.prop('checked') === true ) {
-  //   finalPrice += workshopAmount;
-  // } else {
-  //   finalPrice -= workshopAmount;
-  // }
+  if ( $clicked.prop('checked') === true ) {
+    finalPrice += workshopAmount;
+  } else {
+    finalPrice -= workshopAmount;
+  } */
 
   // if/else snippet - reconfigured as a conditional (ternary) operator
   ($clicked.prop('checked') === true) ?
@@ -134,7 +134,7 @@ $('input[type=checkbox]').on('click', function (event) {
     finalPrice -= workshopAmount;
 
   $(totalAmountDue).html('<strong>Total: $</strong>' + finalPrice);
-  console.log(finalPrice); //testing123
+  //console.log(finalPrice); //testing123
 
   //Disabling Conflicting activities
 
@@ -147,7 +147,7 @@ $('input[type=checkbox]').on('click', function (event) {
     if ($('input[name=js-frameworks]').is(':checked') && $('input[name=js-frameworks]').attr('data-day-and-time')) {
       // disabled true express
       $('input[name=express]').prop('disabled', 'hidden');
-      console.log(dayTimeData, 'Kyoto');
+      //console.log(dayTimeData, 'Kyoto'); //testing123
     } else {
       $('input[name=express]').removeAttr('disabled', 'hidden');
     }
@@ -155,7 +155,7 @@ $('input[type=checkbox]').on('click', function (event) {
     if ($('input[name=express]').is(':checked') && $('input[name=express]').attr('data-day-and-time')) {
       // disabled true js-frameworks
       $('input[name=js-frameworks]').prop('disabled', 'hidden');
-      console.log(dayTimeData, 'Nagoya');
+      //console.log(dayTimeData, 'Nagoya'); //testing123
     } else {
       $('input[name=js-frameworks]').removeAttr('disabled', 'hidden');
     }
@@ -163,7 +163,7 @@ $('input[type=checkbox]').on('click', function (event) {
     if ($('input[name=js-libs]').is(':checked') && $('input[name=js-libs]').attr('data-day-and-time')) {
       // disabled true node
       $('input[name=node]').prop('disabled', 'hidden');
-      console.log(dayTimeData, 'Tsuruga');
+      //console.log(dayTimeData, 'Tsuruga'); //testing123
     } else {
       $('input[name=node]').removeAttr('disabled', 'hidden');
     }
@@ -171,7 +171,7 @@ $('input[type=checkbox]').on('click', function (event) {
     if ($('input[name=node]').is(':checked') && $('input[name=node]').attr('data-day-and-time')) {
       // disabled true js-libs
       $('input[name=js-libs]').prop('disabled', 'hidden');
-      console.log(dayTimeData, 'Tokyo');
+      //console.log(dayTimeData, 'Tokyo'); //testing123
     } else {
       $('input[name=js-libs]').removeAttr('disabled', 'hidden');
     }
@@ -356,6 +356,5 @@ $('form').submit(function () {
         return true;
     }
   }
-
 
 });
